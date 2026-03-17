@@ -148,7 +148,7 @@ background: '#f8f5f0'
 # 注入自定义样式
 inject:
   head:
-    - <link rel="stylesheet" href="/css/custom.css">
+    - <link rel="stylesheet" href="/reading_space/css/custom.css">
 
 # 主题色
 theme_color:

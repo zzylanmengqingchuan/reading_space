@@ -80,7 +80,7 @@ tag_map:
 meta_generator: true
 
 # Date / Time format
-date_format: YYYY-MM-DD
+date_format: YYYY年M月D日
 time_format: HH:mm:ss
 updated_option: 'mtime'
 

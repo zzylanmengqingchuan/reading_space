@@ -62,13 +62,13 @@ post_default_top_img: /img/post-bg.jpg
 # 文章元信息
 post_meta:
   page:
-    date_type: both
-    date_format: relative
+    date_type: created
+    date_format: date
     categories: true
     tags: true
   post:
-    date_type: both
-    date_format: relative
+    date_type: created
+    date_format: date
     categories: true
     tags: true
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <author>
+    <name>阑梦清川</name>
+  </author>
+  <generator uri="https://hexo.io/">Hexo</generator>
+  <icon>https://your-username.github.io/icon.png</icon>
+  <id>https://your-username.github.io/</id>
+  <link href="https://your-username.github.io/" rel="alternate"/>
+  <link href="https://your-username.github.io/atom.xml" rel="self"/>
+  <rights>All rights reserved 2026, 阑梦清川</rights>
+  <subtitle>文学解读与书籍鉴赏</subtitle>
+  <title>阑梦读书会</title>
+  <updated>2026-03-17T12:10:09.489Z</updated>
+  <entry>
+    <author>
+      <name>阑梦清川</name>
+    </author>
+    <category term="少数派" scheme="https://your-username.github.io/tags/%E5%B0%91%E6%95%B0%E6%B4%BE/"/>
+    <category term="记录" scheme="https://your-username.github.io/tags/%E8%AE%B0%E5%BD%95/"/>
+    <id>https://your-username.github.io/2026/03/%E5%B0%91%E6%95%B0%E6%B4%BE/</id>
+    <link href="https://your-username.github.io/2026/03/%E5%B0%91%E6%95%B0%E6%B4%BE/"/>
+    <published>2026-03-16T16:00:00.000Z</published>
+    <summary>
+      <![CDATA[<p>首发少数派：<a href="https://sspai.com/post/107197">https://sspai.com/post/107197</a></p>
+<p>第一次参加 少数派 的年度征文活动,2025 年 8]]>
+    </summary>
+    <title>少数派年度征文：我和AI一起走过的2025</title>
+    <updated>2026-03-17T12:10:09.489Z</updated>
+  </entry>
+</feed>

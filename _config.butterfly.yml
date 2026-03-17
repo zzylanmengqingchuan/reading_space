@@ -1,0 +1,167 @@
+# Butterfly 主题配置 - 文学博客版
+
+# 网站信息
+menu:
+  About: /about/ || fas fa-user
+
+# 代码块样式
+highlight_theme: mac
+
+# 代码复制
+code_copy:
+  enable: true
+  show_text: 复制
+
+# 社交链接
+social:
+
+# 头像
+avatar:
+  img: /img/avatar.png
+  effect: false
+
+# 页面加载动画
+preloader:
+  enable: false
+
+# 首页设置
+index_top_img_height: 120px
+index_post_content:
+  method: 3
+  length: 500
+
+# 侧边栏
+aside:
+  enable: false
+  card_author:
+    enable: true
+    button:
+      enable: true
+      icon: fab fa-github
+      text: GitHub
+      link: https://github.com/zzylanmengqingchuan
+  card_announcement:
+    enable: false
+  card_recent_post:
+    enable: false
+  card_categories:
+    enable: false
+  card_tags:
+    enable: false
+  card_archives:
+    enable: false
+  card_webinfo:
+    enable: false
+
+# 默认顶部图
+default_top_img: /img/default-bg.jpg
+
+# 文章顶部图
+post_default_top_img: /img/post-bg.jpg
+
+# 文章元信息
+post_meta:
+  page:
+    date_type: both
+    date_format: relative
+    categories: true
+    tags: true
+  post:
+    date_type: both
+    date_format: relative
+    categories: true
+    tags: true
+
+# 文章版权
+post_copyright:
+  enable: false
+  decode: false
+  author_href:
+  license: CC BY-NC-SA 4.0
+  license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+# 文章分享
+share:
+  use:
+
+# 上一篇 / 下一篇
+post_pagination: false
+
+# 打赏
+reward:
+  enable: false
+
+# 文章目录
+toc:
+  post: true
+  page: false
+  number: true
+  expand: false
+  style_simple: false
+
+# 页脚设置
+footer:
+  owner:
+    enable: true
+    since: 2024
+  custom_text: <p>以书为友，与文同行</p>
+  copyright: true
+
+# 右侧按钮
+rightside:
+  enable: true
+  readmode: true
+  aside: false
+  font_plus_minus: false
+  translate: false
+  night_mode: true
+  back_to_top: true
+  toc: true
+
+# 阅读模式
+readmode:
+  enable: true
+
+# 暗黑模式
+darkmode:
+  enable: true
+  button: true
+
+# 加载动画
+loading:
+  enable: false
+
+# 图片懒加载
+lazyload:
+  enable: false
+
+# 字体设置 - 使用中文衬线字体
+font:
+  global-font-size: '16px'
+  code-font-size: '14px'
+  font-family: '"Noto Serif SC", "Source Han Serif CN", serif'
+  code-font-family: 'Consolas, "Noto Sans Mono CJK SC", monospace'
+
+# 网站背景
+background: '#f8f5f0'
+
+# 注入自定义样式
+inject:
+  head:
+    - <link rel="stylesheet" href="/css/custom.css">
+
+# 主题色
+theme_color:
+  enable: true
+  main: '#8b4513'
+  paginator: '#8b4513'
+  button_hover: '#a0522d'
+  text_selection: '#8b4513'
+  link_color: '#8b4513'
+  meta_color: '#6b5d4d'
+  hr_color: '#d4c4b0'
+  code_foreground: '#2c2416'
+  code_background: '#f0ebe3'
+
+# 注意：以上是基础配置，更多配置请参考
+# https://butterfly.js.org/posts/4aa8abbe/

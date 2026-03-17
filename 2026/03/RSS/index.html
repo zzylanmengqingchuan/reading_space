@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>给自己的网站增加 RSS 订阅及自动发布 | 阑梦读书会</title><meta name="author" content="阑梦清川"><meta name="copyright" content="阑梦清川"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这篇文章是关于 RSS 订阅的相关内容，主要记录了我为自己的博客网站添加 RSS 订阅方式的过程。 内容包括：  我在配置过程中踩过的坑 如何实现自动发布文章到博客网站上  这些都是我今天一手探索出来的经验。 234362981 1.基本说明首先我还是说一下我使用的技术选型和工具吧。因为如果你的环境和我不一样，那么我的经验基本上很难有参考价值。 我的基本情况如下：  博客部署在腾讯云的服务器上 使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="给自己的网站增加 RSS 订阅及自动发布">
+<meta property="og:url" content="https://zzylanmengqingchuan.github.io/reading_space/2026/03/RSS/index.html">
+<meta property="og:site_name" content="阑梦读书会">
+<meta property="og:description" content="这篇文章是关于 RSS 订阅的相关内容，主要记录了我为自己的博客网站添加 RSS 订阅方式的过程。 内容包括：  我在配置过程中踩过的坑 如何实现自动发布文章到博客网站上  这些都是我今天一手探索出来的经验。 234362981 1.基本说明首先我还是说一下我使用的技术选型和工具吧。因为如果你的环境和我不一样，那么我的经验基本上很难有参考价值。 我的基本情况如下：  博客部署在腾讯云的服务器上 使">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zzylanmengqingchuan.github.io/reading_space/img/avatar.png">
+<meta property="article:published_time" content="2026-03-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-17T12:28:48.280Z">
+<meta property="article:author" content="阑梦清川">
+<meta property="article:tag" content="RSS">
+<meta property="article:tag" content="obsidian">
+<meta property="article:tag" content="插件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zzylanmengqingchuan.github.io/reading_space/img/avatar.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "给自己的网站增加 RSS 订阅及自动发布",
+  "url": "https://zzylanmengqingchuan.github.io/reading_space/2026/03/RSS/",
+  "image": "https://zzylanmengqingchuan.github.io/reading_space/img/avatar.png",
+  "datePublished": "2026-03-16T16:00:00.000Z",
+  "dateModified": "2026-03-17T12:28:48.280Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "阑梦清川",
+      "url": "https://zzylanmengqingchuan.github.io/reading_space"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/reading_space/img/favicon.png"><link rel="canonical" href="https://zzylanmengqingchuan.github.io/reading_space/2026/03/RSS/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/reading_space/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'undefined')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/reading_space/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '给自己的网站增加 RSS 订阅及自动发布',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/reading_space/css/custom.css"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/reading_space/atom.xml" title="阑梦读书会" type="application/atom+xml">
+</head><body><div class="bg-animation" id="web_bg" style="background-color: #f8f5f0;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/reading_space/img/avatar.png" onerror="this.onerror=null;this.src='/reading_space/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/reading_space/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/reading_space/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/reading_space/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/reading_space/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/reading_space/img/default-bg.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/reading_space/"><span class="site-name">阑梦读书会</span></a><a class="nav-page-title" href="/reading_space/"><span class="site-name">给自己的网站增加 RSS 订阅及自动发布</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/reading_space/about/"><i class="fa-fw fas fa-user"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">给自己的网站增加 RSS 订阅及自动发布</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-03-16T16:00:00.000Z" title="发表于 2026-03-17 00:00:00">2026-03-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-03-17T12:28:48.280Z" title="更新于 2026-03-17 20:28:48">2026-03-17</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout hide-aside" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>这篇文章是关于 RSS 订阅的相关内容，主要记录了我为自己的博客网站添加 RSS 订阅方式的过程。</p>
+<p>内容包括：</p>
+<ol>
+<li>我在配置过程中踩过的坑</li>
+<li>如何实现自动发布文章到博客网站上</li>
+</ol>
+<p>这些都是我今天一手探索出来的经验。</p>
+<p>234362981</p>
+<h1 id="1-基本说明"><a href="#1-基本说明" class="headerlink" title="1.基本说明"></a>1.基本说明</h1><p>首先我还是说一下我使用的技术选型和工具吧。因为如果你的环境和我不一样，那么我的经验基本上很难有参考价值。</p>
+<p>我的基本情况如下：</p>
+<ol>
+<li>博客部署在腾讯云的服务器上</li>
+<li>使用 Halo 模板搭建网站（我文章使用这个进行演示）</li>
+<li>采用 Docker 进行部署</li>
+</ol>
+<p>目前已经运营了大概9个月左右。</p>
+<p>所以我今天文章里的解决方案，也主要是实现自动发布文章到 Halo 模板搭建的网站。至于其他类型的网站具体怎么实现，我不太清楚。</p>
+<p>这是前提，网站模版还是很多的</p>
+<h1 id="2-RSS是什么"><a href="#2-RSS是什么" class="headerlink" title="2.RSS是什么"></a>2.RSS是什么</h1><p>什么是 RSS？我第一次接触这个概念，实际上是在一个 B 站的视频里。</p>
+<p>RSS 这个事情怎么理解呢？如果你不清楚的话，我可以举一个比方：这实际上就是“主动去报亭买报纸”和“订报员送报上门”的区别。</p>
+<ol>
+<li><p>获取信息的逻辑<br>在没有 RSS 的时候，如果你想看 10 个不同的技术博客、新闻网站或论坛，你每天都要打开浏览器，依次输入网址 1、网站 2、网站 3 的链接，看看有没有更新。这相当于你需要自己去检查，非常耗时且繁琐。</p>
+<p>RSS 则相当于一个“自动订报员”。只要你把这 10 个网站的 RSS 订阅链接交给喜欢的阅读器（一款工具），这个工具就会在后台 24 小时不知疲倦地替你跑腿。一旦发现某个网站更新了文章，阅读器就会立马把它抓取下来。你只要打开阅读器，就能像刷朋友圈一样，一口气看完所有关注网站的更新内容。</p>
+</li>
+</ol>
+<p>在如今算法推荐大行其道的时代（比如抖音、小红书、今日头条），RSS 显得有些复古，但它拥有一批极其忠诚的用户，甚至被誉为“古典互联网的最后一道防线”。它的核心优势在于：</p>
+<ol>
+<li><p>信息的绝对掌控权<br>在现在的社交媒体里，你看什么是由于算法决定的。平台为了让你多停留，会不断推荐各种博眼球的内容。而 RSS 是百分之百纯粹的，你订阅了什么就推送什么，你不订阅的一定不会出现在阅读器里，没有广告，没有干扰。</p>
+</li>
+<li><p>极高的阅读效率<br>你可以把少数派的文章、一些大佬的博客、甚至支持 RSS 订阅的网站、播客、YouTube 频道全部结合在一个工具里。不需要来回切换，降低了获取信息的摩擦力。</p>
+</li>
+<li><p>统一的阅读体验<br>每个网站的排版、字体、背景颜色都不相同，有的网站甚至弹幕满天飞，广告到处都是。但只要通过 RSS 抓取到阅读器里，所有的文章都会被统一换成自己喜欢的字体、字号和背景色，提供最纯粹的沉浸式阅读体验。</p>
+</li>
+</ol>
+<p>如果你是一个写作者，你可以同时体验 RSS 生态的两端：<br>(a) 你是一个高效的信息消费者，可以使用 RSS 去订阅别人的内容；<br>(b) 你也是一个独立的信息提供者，可以给自己的网站装上 RSS，让别人来订阅你的博客。</p>
+<p>其实去订阅别人很容易，但怎么给自己的网站添加 RSS，这是我这篇文章想要解决的主要问题，也是我今天的探索和想要分享的核心内容，希望大家能有所收获。</p>
+<h1 id="3-RSS订阅工具"><a href="#3-RSS订阅工具" class="headerlink" title="3.RSS订阅工具"></a>3.RSS订阅工具</h1><p>上面我们也解释了 RSS 可以去订阅别人，但是有没有工具可以支持 RSS 订阅呢？</p>
+<p>实际上是有这类工具的，比如：</p>
+<ol>
+<li>FOLO 这款工具</li>
+<li>我推荐过多次的 Readwise Reader 阅读器</li>
+</ol>
+<p>我已经为 Readwise Reader 写了六七篇教程了。其中 FOLO 也是我使用过的一款工具，是我第一次接触 RSS 时就了解到的一款产品。</p>
+<p>具体介绍：<a target="_blank" rel="noopener" href="https://sspai.com/post/101702">https://sspai.com/post/101702</a></p>
+<p>但是现在我已经不使用 FOLO 了，我现在是 Readwise Reader 的深度用户，我觉得它更加强大一些。</p>
+<p>具体关于 Readwise Reader 的介绍，可以去看我之前写的多篇文章。同时，我的知识库里面也全部同步了，可以去知识库里面统一地看，也可以在公众号列表里面找一找我之前写的文章。</p>
+<p>曾几何时，很多人向我推荐 Readwise Reader，但我觉得它没什么用。</p>
+<p>人们对于知识获取和信息搜集，通常都有自己的一套系统。当一个新工具想要进入你的系统时，如果你不熟悉它的运作方式，肯定会产生排斥。</p>
+<p>就如同 2025 年，身边的小伙伴多次向我推荐它，但我都没有去用，即便用了也觉得效果一般。直到 2026 年 1 月这个关键节点，我才真正体会到它的好处。</p>
+<p>我现在已经开始正式订阅付费，并且在深度使用。关于这个工具的具体功能我就不多介绍了，懂的都懂。</p>
+<h1 id="4-安装插件"><a href="#4-安装插件" class="headerlink" title="4.安装插件"></a>4.安装插件</h1><p>我去年建站的时候选择的是 Halo 这样一个非常现代化且强大的开源建站工具。</p>
+<p>它的核心优势之一就是拥有极其丰富的插件生态。像我在博客里面增加 RSS 功能，不需要写任何代码，只需要安装一下官方的插件并启用，在菜单栏里面添加配置一下就可以了。</p>
+<p>然后这个 RSS 订阅的链接就会显示出来。</p>
+<p><img src="https://zzy-1326340203.cos.ap-beijing.myqcloud.com/20260316210056202.png" alt="image.png"><br>在菜单栏添加 RSS 订阅：</p>
+<p><img src="https://zzy-1326340203.cos.ap-beijing.myqcloud.com/20260316210149804.png" alt="image.png"><br>然后你就会在菜单栏里面看到这个。</p>
+<p>当然，由于主题的不同，这个功能具体显示的位置肯定也会体现在菜单栏上面。</p>
+<p><img src="https://zzy-1326340203.cos.ap-beijing.myqcloud.com/20260316210246173.png" alt="image.png"></p>
+<h1 id="5-阅读器订阅"><a href="#5-阅读器订阅" class="headerlink" title="5.阅读器订阅"></a>5.阅读器订阅</h1><p>在 Reader 里面打开设置好的 Feed，就可以把它这个订阅链接粘贴进来，然后点击订阅。</p>
+<p>后面我这个网站文章更新的时候，它就会自动推送。</p>
+<p><img src="https://zzy-1326340203.cos.ap-beijing.myqcloud.com/20260316210815275.png" alt="image.png"><br>如果你第一次订阅的话，它会自动提取最近、最新的 5 篇文章。</p>
+<p>反正我是这样的。下面这个是我使用自己的网站进行测试，是没有问题的。</p>
+<p><img src="https://zzy-1326340203.cos.ap-beijing.myqcloud.com/20260316210914240.png" alt="image.png"></p>
+<h1 id="6-自动同步"><a href="#6-自动同步" class="headerlink" title="6.自动同步"></a>6.自动同步</h1><h2 id="6-1obsidian插件"><a href="#6-1obsidian插件" class="headerlink" title="6.1obsidian插件"></a>6.1obsidian插件</h2><p>这个也是我的一次突发奇想。因为我觉得在 Halo 这个网站上写文章其实还是比较麻烦的，需要复制粘贴、设置背景图，然后去后台操作。</p>
+<p>但我知道在 Obsidian 里面写公众号的时候，有一个插件可以自动发到草稿箱，于是我就问 AI：能不能把 Obsidian 的文章也自动发到我的 Halo 网站后台呢？</p>
+<p>在不断和 AI 对话的过程中，我一直在研究这个问题：</p>
+<ol>
+<li>最初实现的功能是：文章可以直接发布到草稿箱（即网站后台），但仍需要你手动点击发布。</li>
+<li>随后 AI 告诉我：你可以设置一个参数，将 Publish 设置为 True（默认是 False）。</li>
+</ol>
+<p>只要写成 True，它就会自动发布到你的网站上。我测试了一下，果然是有效的。具体的实现过程，大家可以去问一下大模型。</p>
+<p><img src="https://zzy-1326340203.cos.ap-beijing.myqcloud.com/20260316211335030.png" alt="image.png"></p>
+<h2 id="6-2参数配置"><a href="#6-2参数配置" class="headerlink" title="6.2参数配置"></a>6.2参数配置</h2><p>第一次安装这个插件的话，相关参数配置如下：</p>
+<ol>
+<li>站点名称：可以随意填写</li>
+<li>站点地址：填写你网站的实际地址</li>
+<li>个人令牌：需要去你网站的后台获取</li>
+</ol>
+<p>这些配置的具体细节都可以问大模型来解决。填好之后可以验证一下，大概率会验证通过，这个环节很少会遇到问题。</p>
+<p><img src="https://zzy-1326340203.cos.ap-beijing.myqcloud.com/20260316211406808.png" alt="image.png"><br>下面这个就是在网站后台创建个人令牌的过程。因为 Obsidian 的插件需要填取这个令牌，它相当于是一个凭证信息，不然系统无法识别文章发布的位置，所以这个是必须要填的。</p>
+<h2 id="6-3权限配置"><a href="#6-3权限配置" class="headerlink" title="6.3权限配置"></a>6.3权限配置</h2><p>权限设置是非常重要的一步。如果你想让 Obsidian 帮你发布文章，就必须给插件授权。</p>
+<p>主要的权限需求如下：</p>
+<ol>
+<li><p>文章管理权限<br>(a) 查看文章<br>(b) 创建文章<br>(c) 更新文章<br>(d) 删除文章<br>(e) 发布文章</p>
+</li>
+<li><p>分类与标签管理权限<br>(a) 查看和创建分类<br>(b) 查看和创建标签</p>
+</li>
+</ol>
+<p>关于系统的指标以及应用市场等其他权限则不需要。最核心的就是文章管理、内容管理以及标签主题管理，这些是比较重要的。</p>
+<p><img src="https://zzy-1326340203.cos.ap-beijing.myqcloud.com/20260316211453453.png" alt="image.png"></p>
+<h2 id="6-4属性介绍"><a href="#6-4属性介绍" class="headerlink" title="6.4属性介绍"></a>6.4属性介绍</h2><p>因为我们这个插件是自动同步的，所以你需要填写一些属性。我自己和 AI 经过问答记录，最终总结出来的内容如下：</p>
+<p>属性需要包含：</p>
+<ol>
+<li><strong>Title</strong>：文章标题。</li>
+<li><strong>Slug</strong>：文章链接 URL 后面那部分内容，作为一个标识符。</li>
+<li><strong>Cover</strong>：文章封面。这是我的 Halo 建站模板需要用到的属性。建议使用腾讯云图床生成的公网可访问链接，不能使用本地图片，否则在网站上会刷新不出来。</li>
+<li><strong>Categories</strong>：文章的分类。</li>
+<li><strong>Tags</strong>：文章的标签属性。</li>
+<li><strong>Halo 号</strong>：这个属性插件会自动生成。</li>
+</ol>
+<p>另外还有两个关键字段：</p>
+<ul>
+<li><strong>Name</strong>：实际上是文章的唯一 ID。如果你发布了多篇文章，但它们的 Name 重复了，那么之前的文章就会被覆盖。</li>
+<li><strong>Publish</strong>：主要控制文章是否直接发布到网站上。如果你将 Publish 设置为 true，文章就会直接发送到网站，相当于你不需要进入后台操作了。</li>
+</ul>
+<p>当然，这些配置细节都是我和 AI 沟通了很久才问出来的。</p>
+<p>参考：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">title<span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#123;</span>title<span class="punctuation">&#125;</span><span class="punctuation">&#125;</span></span><br><span class="line">cover<span class="punctuation">:</span></span><br><span class="line">categories<span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">tags<span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line">halo<span class="punctuation">:</span></span><br><span class="line">  site<span class="punctuation">:</span> https<span class="punctuation">:</span><span class="comment">//lanmengqingchuan.cn</span></span><br><span class="line">  publish<span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">  name<span class="punctuation">:</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你想让你的文章同步到后台，然后检查一下再发送，你可以把 Publish 设置为 false。</p>
+<p>如果你想直接发送，不想去后台，那么你就和我一样：</p>
+<ol>
+<li>设置为 true</li>
+<li>设置为 true 后，它就会自动发送</li>
+</ol>
+<p>这个 Name 属性的话，你可以不填，设置为空。</p>
+<p>它发文章的时候，会自动给你设置一个。这个 Name 实际上就是你这篇文章的一个 ID，是 Halo 数据库给这份文章唯一的身份标识。插件就是靠这个“身份证”来认人的，而不是靠文章的标题。</p>
+<p>所以，如果你设置为空，那么发文章的时候，它就会自动分配一个 ID：</p>
+<ol>
+<li>发送成功之后，你会发现属性里面多了这样一个 ID。</li>
+<li>当你想修改文章的时候，你会发现它已经有 ID 了。</li>
+<li>这时候你再发送，它就会知道这是对旧文章的更新，从而执行更新操作。</li>
+</ol>
+<p>所以这个 ID 扮演着非常重要的角色。如果你的 ID 是一样的，那么后发的文章就会覆盖之前的文章。这也是我今天遇到的一个非常烦人的问题，尝试多次之后才知道这个 Name 是不能重复的。</p>
+<h1 id="7-内容总结"><a href="#7-内容总结" class="headerlink" title="7.内容总结"></a>7.内容总结</h1><p>基本上这就是这篇文章的全部内容了，主要涵盖了以下两个核心点：</p>
+<ol>
+<li><p>基础配置<br>(a) 如何给自己的网站添加 RSS 订阅<br>(b) 如何使用 Obsidian 的 Halo 插件，将 Obsidian 中的文章自动发送到网站上</p>
+</li>
+<li><p>实现原理<br>实际上就是通过插件配置好站点信息以及 Token 信息即可。整体来说，逻辑是非常容易理解的。</p>
+</li>
+</ol>
+<p>在具体实现的过程中，可能会遇到各种各样的问题，但好在大模型可以帮助我们解决很多复杂的障碍。我今天整个从头到尾的流程，都是在 Tabbit 这款浏览器中操作的，这也是我非常喜欢的一款浏览器。</p>
+<h1 id="8-一点思考"><a href="#8-一点思考" class="headerlink" title="8.一点思考"></a>8.一点思考</h1><p>其实在搞这个的过程中，我也在思考一个问题：传统的网站、博客真的还有人在看吗？RSS 存在的意义究竟在哪里？在这个推荐算法和信息茧房的时代，做这些真的有意义吗？</p>
+<p>去年这个时候，我想到了之前读过的公众号 AI 圈顶流博主——数字生命卡兹克写的一篇文章。那篇文章主要是关于给 AI “投毒”的事情，提到现在大模型回答问题基本上都是去网上搜索信息，而如果你给它一些假信息，它可能就会误以为真。</p>
+<p>文章链接：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/zfaN13Jg2h4VQqiCyXLggw">https://mp.weixin.qq.com/s/zfaN13Jg2h4VQqiCyXLggw</a></p>
+<p>针对这件事，我思考了一下这样做的意义。数字生命卡兹克的文章末尾有一句话：<br>“如果有余力为这个世界贡献一点你的足迹，我们能做的就是把自己所知道的一点真实的内容留在互联网上。虽然这些内容可能不会立即被 AI 搜索到，可能微不足道，淹没在互联网海量的数据里面，但是有一天，当某个人和 AI 进行对话的时候，也许能从互联网这种乱七八糟、嘈杂的声音里面，摸到一两条还算干净的线索。”</p>
+<p>这句话深深地引起了我的共鸣，所以我最终还是决定给自己的网站加上 RSS。我觉得这样做是有意义的，虽然我的文章质量写得确实一般，但还是希望喜欢阅读的小伙伴可以订阅一下。</p>
+<p>相较于微信公众号这种推送机制，纯纯的信息流会导致你即便订阅了一些博主，他的文章也不一定能推荐给你。所以在这样一个时代，RSS 还是非常有意义的。我很反感微信公众号、小红书、今日头条、抖音、B 站等社交平台，现在几乎很少有平台不靠信息推荐了。</p>
+<p>因为都在抢夺用户的注意力，如果不靠算法给用户推荐那些喜欢看、吸引眼球、感兴趣的内容，平台就留不住用户，也很难生存下去。但我非常不喜欢这种做法，这也是我为什么在接触到 RSS、接触到 Readwise Reader 之后，决定深入使用的原因。</p>
+<p>当然。</p>
+<p>你选择了个人博客，选择了 RSS 订阅，你就选择了资产沉淀，选择了复利系统，而不是短期流量。</p>
+<p>所以作为长期主义者，我相信这是一个不会错的选择。而我作为一个内容创作者，也会在这些道路上坚定地走下去，尽我全力在 AI 时代，在这个乱七八糟、信息堆积、噪声连绵不断的网络上面，留下一点属于自己的痕迹。</p>
+<p>PS：个人博客地址：lanmengqingchuan.cn,欢迎订阅~</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/reading_space/tags/RSS/">RSS</a><a class="post-meta__tags" href="/reading_space/tags/obsidian/">obsidian</a><a class="post-meta__tags" href="/reading_space/tags/%E6%8F%92%E4%BB%B6/">插件</a></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2024 - 2026 By 阑梦清川</span></div><div class="footer_custom_text"><p>以书为友，与文同行</p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/reading_space/js/utils.js?v=5.5.4"></script><script src="/reading_space/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

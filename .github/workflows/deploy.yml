@@ -13,19 +13,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: true
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install hexo-renderer-pug --save
+
+      - name: Debug - List files
+        run: |
+          echo "=== Checking theme ==="
+          ls -la node_modules/hexo-theme-butterfly/ | head -10
+          echo "=== Checking config ==="
+          cat _config.yml | grep theme
 
       - name: Generate static files
-        run: npx hexo clean && npx hexo generate
+        run: |
+          npx hexo clean
+          npx hexo generate
+          echo "=== Generated files ==="
+          ls -la public/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-ghpages@v4

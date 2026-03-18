@@ -150,8 +150,6 @@ background: '#f8f5f0'
 inject:
   head:
     - <link rel="stylesheet" href="/reading_space/css/custom.css">
-  bottom:
-    - <div class="site-rss-entry"><a class="site-rss-entry__link" href="/reading_space/rss2.xml" target="_blank" rel="noopener noreferrer"><i class="fas fa-rss"></i><span class="site-rss-entry__text">RSS订阅</span><span class="site-rss-entry__path">/rss2.xml</span></a></div>
 
 # 主题色
 theme_color:

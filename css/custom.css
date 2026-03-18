@@ -726,112 +726,51 @@ a:hover {
   animation: sketch-float 3s ease-in-out infinite;
 }
 
-.rss-shortcut {
+.site-rss-entry {
   position: fixed;
   left: 18px;
-  bottom: 18px;
-  z-index: 101;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  top: 104px;
+  z-index: 999;
 }
 
-.rss-shortcut__toggle,
-.rss-shortcut__action {
+.site-rss-entry__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
   border: 3px solid var(--sketch-line);
   border-radius: var(--sketch-radius-sm);
-  background: #fffdf9;
-  box-shadow: var(--sketch-shadow);
-  color: var(--sketch-ink);
-  font-family: "LXGW WenKai", "Microsoft YaHei", serif;
-}
-
-.rss-shortcut__toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 15px;
-  font-size: 1.02rem;
-  cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
-}
-
-.rss-shortcut__toggle i {
-  color: var(--sketch-accent);
-}
-
-.rss-shortcut__toggle:hover,
-.rss-shortcut__action:hover {
-  background: var(--sketch-accent);
-  color: #fff;
-  box-shadow: 2px 2px 0 0 var(--sketch-line);
-  transform: translate(2px, 2px);
-}
-
-.rss-shortcut__toggle:hover i {
-  color: #fff;
-}
-
-.rss-shortcut__panel {
-  width: min(360px, calc(100vw - 36px));
-  padding: 16px 16px 14px;
-  background: rgba(255, 253, 249, 0.98);
-  border: 3px solid var(--sketch-line);
-  border-radius: var(--sketch-radius-md);
+  background: #ff4d4d;
   box-shadow: var(--sketch-shadow-lg);
-}
-
-.rss-shortcut__title,
-.rss-shortcut__desc,
-.rss-shortcut__meta {
-  margin: 0;
-}
-
-.rss-shortcut__title {
-  font-size: 1.08rem;
-  font-weight: 700;
-  color: var(--sketch-ink);
-}
-
-.rss-shortcut__desc,
-.rss-shortcut__meta {
-  margin-top: 8px;
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.rss-shortcut__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.rss-shortcut__action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0 14px;
-  font-size: 0.96rem;
-  text-decoration: none;
-  cursor: pointer;
+  color: #fff !important;
+  font-family: "LXGW WenKai", "Microsoft YaHei", serif;
+  font-size: 1.02rem;
+  line-height: 1;
+  text-decoration: none !important;
   transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
 }
 
-.rss-shortcut__meta code {
-  word-break: break-all;
-  color: var(--sketch-blue);
+.site-rss-entry__link:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 var(--sketch-line);
+  background: #e13e3e;
 }
 
-.rss-shortcut__meta--muted,
-.rss-shortcut__meta--muted a {
-  color: rgba(45, 45, 45, 0.72);
+.site-rss-entry__link i {
+  font-size: 1.08rem;
 }
 
-.rss-shortcut.is-copied .rss-shortcut__panel {
-  border-color: var(--sketch-accent);
+.site-rss-entry__text {
+  font-weight: 700;
+}
+
+.site-rss-entry__path {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 0.88rem;
 }
 
 @media screen and (max-width: 900px) {
@@ -918,19 +857,14 @@ a:hover {
     font-size: 1.16rem;
   }
 
-  .rss-shortcut {
+  .site-rss-entry {
     left: 12px;
     right: 12px;
-    bottom: 12px;
-    align-items: stretch;
+    top: 92px;
   }
 
-  .rss-shortcut__toggle {
+  .site-rss-entry__link {
     justify-content: center;
-    width: 100%;
-  }
-
-  .rss-shortcut__panel {
     width: 100%;
   }
 }

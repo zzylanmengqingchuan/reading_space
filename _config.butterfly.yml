@@ -149,6 +149,8 @@ background: '#f8f5f0'
 inject:
   head:
     - <link rel="stylesheet" href="/reading_space/css/custom.css">
+  bottom:
+    - <script defer src="/reading_space/js/rss-shortcut.js"></script>
 
 # 主题色
 theme_color:
